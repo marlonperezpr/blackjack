@@ -12,6 +12,7 @@ class Carta:
     def __repr__(self):
         return f"{self.valor} de {self.naipe}"
     
+    
 class Baralho:
     def __init__(self):
         self.cartas = []
@@ -21,13 +22,14 @@ class Baralho:
         for naipe in self.naipes:
             for valor in self.valores:
                 self.cartas.append(Carta(valor, naipe))
-
         
     def embaralhar(self):
         random.shuffle(self.cartas)
 
     def distribuir_carta(self):
         return self.cartas.pop()
+    
+    
     
 class Jogador:
     def __init__(self, nome):
@@ -79,7 +81,7 @@ def jogo():
     print(dealer)
 
     while True:
-        acao = input("O que você deseja fazer? (1) Hit (2) Stand: ")
+        acao = input("O que você deseja fazer? (1) Hit (2) Stand  (3) Dobrar: ")
         if acao == "1":
             jogador.receber_carta(baralho.distribuir_carta())
             print(jogador)
@@ -88,6 +90,14 @@ def jogo():
                 return
         elif acao == "2":
             break
+        elif acao == "3":
+            jogador.receber_carta(baralho.distribuir_carta())
+            print(jogador)
+            if jogador.valor_mao() > 21:
+                print("Você estourou! O dealer venceu!")
+                return
+            else:
+                break
 
     dealer.jogar()
     print(dealer)
